@@ -4,8 +4,9 @@
 
 using namespace std;
 
-void merge(vector<int> &v, int s, int e, int mid)
+int merge(vector<int> &v, int s, int e, int mid)
 {
+    int inversion=0;
     int len1=mid-s+1;
     int len2=e-mid;
     vector<int> v1(len1);
@@ -32,6 +33,7 @@ void merge(vector<int> &v, int s, int e, int mid)
         }
         else{
             v[mainindex++]=v2[rightindex++];
+            inversion+=(len1-leftindex);
         }
     }
     while(leftindex<len1)
@@ -42,18 +44,29 @@ void merge(vector<int> &v, int s, int e, int mid)
     {
         v[mainindex++]=v2[rightindex++];
     }
+    return inversion;
 
 }
-void mergeSortAlgo(vector<int> &v, int s, int e)
+int mergeSortAlgo(vector<int> &v, int s, int e)
 {
-    if(s>=e)
+    // if(s>=e)
+    // {
+    //     return;
+    // }
+    // int mid=s+(e-s)/2;
+    // mergeSortAlgo(v,s,mid);
+    // mergeSortAlgo(v,mid+1,e);
+    // merge(v,s,e,mid);
+
+    int inversion=0;
+    if(s<e)
     {
-        return;
+        int mid=s+(e-s)/2;
+        inversion+=mergeSortAlgo(v,s,mid);
+        inversion+=mergeSortAlgo(v,mid+1,e);
+        inversion+=merge(v,s,e,mid);
     }
-    int mid=s+(e-s)/2;
-    mergeSortAlgo(v,s,mid);
-    mergeSortAlgo(v,mid+1,e);
-    merge(v,s,e,mid);
+    return inversion;
 }
 int main()
 {
@@ -70,10 +83,10 @@ int main()
     }
     int s=0;
     int e=v.size()-1;
-    mergeSortAlgo(v,s,e);
-    for(int i=0;i<n;i++)
-    {
-        cout<<v[i]<<" ";
-    }
+    cout<<mergeSortAlgo(v,s,e);
+    // for(int i=0;i<n;i++)
+    // {
+    //     cout<<v[i]<<" ";
+    // }
     return 0;
 }

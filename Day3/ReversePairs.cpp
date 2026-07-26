@@ -44,16 +44,37 @@ void merge(vector<int> &v, int s, int e, int mid)
     }
 
 }
-void mergeSortAlgo(vector<int> &v, int s, int e)
+
+// remember this function
+int countPair(vector<int> &v, int s, int mid, int e)
 {
-    if(s>=e)
+    int right=mid+1;
+    int count=0;
+    for(int i=s;i<=mid;i++)
     {
-        return;
+        while(right<=e && (long long)v[i]>2LL*v[right])
+        {
+            right++;
+        }
+        count+=(right-(mid+1));
     }
-    int mid=s+(e-s)/2;
-    mergeSortAlgo(v,s,mid);
-    mergeSortAlgo(v,mid+1,e);
-    merge(v,s,e,mid);
+    return count;
+}
+int mergeSortAlgo(vector<int> &v, int s, int e)
+{
+    int count=0;
+    if(s<e)
+    {
+        int mid=s+(e-s)/2;
+        count+=mergeSortAlgo(v,s,mid);
+        count+=mergeSortAlgo(v,mid+1,e);
+        count+=countPair(v,s,mid,e);
+        merge(v,s,e,mid);
+    }
+    return count;
+    
+    
+    
 }
 int main()
 {
@@ -70,10 +91,7 @@ int main()
     }
     int s=0;
     int e=v.size()-1;
-    mergeSortAlgo(v,s,e);
-    for(int i=0;i<n;i++)
-    {
-        cout<<v[i]<<" ";
-    }
+    cout<<mergeSortAlgo(v,s,e);
+    
     return 0;
 }
