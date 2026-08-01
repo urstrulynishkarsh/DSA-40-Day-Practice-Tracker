@@ -8,15 +8,11 @@ using namespace std;
 int KadaneAlgorithm(vector<int> &v)
 {
     int maxi=INT_MIN;
-    int sum=0;
+    int curr=0;
     for(int i=0;i<v.size();i++)
     {
-        sum+=v[i];
-        maxi=max(maxi,sum);
-        if(sum<0)
-        {
-            sum=0;
-        }
+        curr=max(v[i],curr+v[i]);
+        maxi=max(maxi,curr);
     }
     return maxi;
 
