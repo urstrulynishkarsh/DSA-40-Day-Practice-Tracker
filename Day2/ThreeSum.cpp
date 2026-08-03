@@ -38,10 +38,6 @@ vector<vector<int>> ThreeSum(vector<int> &v)
                 {
                     j++;
                 }
-                while(j<k && v[k]==v[k+1] )
-                {
-                    k--;
-                }
             }
         }
     }

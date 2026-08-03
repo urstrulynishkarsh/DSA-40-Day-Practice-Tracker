@@ -43,10 +43,6 @@ vector<vector<int>> FourSum(vector<int> &v, int target)
                     {
                         k++;
                     }
-                    while(k<l && v[l]==v[l+1])
-                    {
-                        l--;
-                    }
                 }
             }
         }

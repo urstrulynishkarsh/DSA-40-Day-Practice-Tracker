@@ -5,21 +5,27 @@
 using namespace std;
 
 
-vector<int> TwoSum(vector<int> &v, int target)
+vector<int> singleNumberIII(vector<int> &v)
 {
-       
-    unordered_map<int,int> mp;
-    for(int i=0;i<v.size();i++)
+    int xor_r=0;
+    for(int val:v)
     {
-        int complement=target-v[i];
-        if(mp.count(complement))
-        {
-            return {mp[complement],i};
-        }
-        mp[v[i]]=i;
+        xor_r^=val;
     }
-    return {-1,-1};
-
+    int mask=xor_r &(-xor_r);
+    int groupa=0;
+    int groupb=0;
+    for(int val:v)
+    {
+        if(mask&val)
+        {
+            groupa^=val;
+        }
+        else{
+            groupb^=val;
+        }
+    }
+    return {groupa,groupb};
 
 }
 int main()
@@ -35,16 +41,12 @@ int main()
     {
         cin>>v[i];
     }
-    int target;
-    cout<<"Enter the target value: ";
-    cin>>target;
-    vector<int> result=TwoSum(v,target);
-    for(int val:result)
+   
+    vector<int> result=singleNumberIII(v);
+     for(int val:result)
         {
             cout<<val<<" ";
         }
         cout<<endl;
-   
-    
     return 0;
 }
