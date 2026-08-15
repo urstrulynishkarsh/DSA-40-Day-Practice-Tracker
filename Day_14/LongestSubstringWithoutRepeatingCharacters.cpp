@@ -22,10 +22,7 @@ int lengthOfLongestSubstring(string &s)
                 }
                 i++;
             }
-            if(mp.size()==j-i+1)
-            {
-                maxi=max(maxi,j-i+1);
-            }
+            maxi=max(maxi,j-i+1);
             j++;
         }
         return maxi;

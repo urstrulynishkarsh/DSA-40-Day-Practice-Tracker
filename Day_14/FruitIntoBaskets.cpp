@@ -11,7 +11,7 @@ int fruitintobasket(vector<int> &v)
     int i=0;
     int j=0;
     int k=2;
-    int maxi=1;
+    int maxi=0;
     unordered_map<int,int> mp;
     while(j<n)
     {
@@ -25,10 +25,7 @@ int fruitintobasket(vector<int> &v)
             }
             i++;
         }
-        if(mp.size()<=k)
-        {
-            maxi=max(maxi,j-i+1);
-        }
+        maxi=max(maxi,j-i+1);
         j++;
     }
     return maxi;
