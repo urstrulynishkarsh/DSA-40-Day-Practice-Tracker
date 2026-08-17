@@ -67,29 +67,31 @@ vector<int> inorder(Node *root)
 }
 
 
-Node *LCABST(Node *root, Node *p, Node *q)
+Node *constructBST(vector<int> inorderVector,int s, int e)
 {
-     if(root==NULL)
-     {
+    if(s>e)
+    {
         return NULL;
-     }
-     if(p->data<root->data && q->data<root->data)
-     {
-        Node *leftans=LCABST(root->left,p,q);
-        if(leftans!=NULL)
-        {
-            return leftans;
-        }
-     }
-     if(p->data>root->data && q->data>root->data)
-     {
-        Node *rightans=LCABST(root->right,p,q);
-        if(rightans!=NULL)
-        {
-            return rightans;
-        }
-     }
-     return root;
+    }
+    int mid=s+(e-s)/2;
+    Node * root=new Node(inorderVector[mid]);
+    root->left=constructBST(inorderVector,s,mid-1);
+    root->right=constructBST(inorderVector,mid+1,e);
+    return root;
+}
+
+// Preorder traversal
+void preorder(Node *root)
+{
+    if(root == NULL)
+    {
+        return;
+    }
+
+    cout << root->data << " ";
+
+    preorder(root->left);
+    preorder(root->right);
 }
 
 int main()
@@ -97,16 +99,14 @@ int main()
     Node *root=NULL;
     cout<<"Enter the data for Node: "<<endl;
     takeinput(root);
-    // vector<int> result=inorder(root);
-    // for(int num:result)
-    // {
-    //     cout<<num<<" ";
-    // }
-    int p,q;
-    cout<<"Enter the value of p and q node: ";
-    cin>>p>>q;
-    Node *pq=new Node(p);
-    Node *qp=new Node(q);
-    Node *ans=LCABST(root,pq,qp);
-    cout<<ans->data;
+    vector<int> result=inorder(root);
+
+    Node *head=constructBST(result,0,result.size()-1);
+
+    cout << "Preorder of Balanced BST: ";
+
+    preorder(head);
+
+    return 0;
+
 }

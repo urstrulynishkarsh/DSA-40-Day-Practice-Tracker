@@ -67,46 +67,34 @@ vector<int> inorder(Node *root)
 }
 
 
-Node *LCABST(Node *root, Node *p, Node *q)
-{
-     if(root==NULL)
-     {
-        return NULL;
-     }
-     if(p->data<root->data && q->data<root->data)
-     {
-        Node *leftans=LCABST(root->left,p,q);
-        if(leftans!=NULL)
-        {
-            return leftans;
-        }
-     }
-     if(p->data>root->data && q->data>root->data)
-     {
-        Node *rightans=LCABST(root->right,p,q);
-        if(rightans!=NULL)
-        {
-            return rightans;
-        }
-     }
-     return root;
-}
 
+int Kthlargest(Node *root, int &k)
+{
+    if(root==NULL)
+    {
+        return -1;
+    }
+    int rightans=Kthlargest(root->right,k);
+   
+    if(rightans!=-1)
+    {
+        return rightans;
+    }
+    k--;
+    if(k==0)
+    {
+        return root->data;
+    }
+    int leftans=Kthlargest(root->left,k);
+    return leftans;
+}
 int main()
 {
     Node *root=NULL;
     cout<<"Enter the data for Node: "<<endl;
     takeinput(root);
-    // vector<int> result=inorder(root);
-    // for(int num:result)
-    // {
-    //     cout<<num<<" ";
-    // }
-    int p,q;
-    cout<<"Enter the value of p and q node: ";
-    cin>>p>>q;
-    Node *pq=new Node(p);
-    Node *qp=new Node(q);
-    Node *ans=LCABST(root,pq,qp);
-    cout<<ans->data;
+    int k;
+    cout<<"Enter the value of k: ";
+    cin>>k;
+    cout<<Kthlargest(root,k);
 }

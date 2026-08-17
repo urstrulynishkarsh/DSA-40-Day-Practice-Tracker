@@ -67,29 +67,37 @@ vector<int> inorder(Node *root)
 }
 
 
-Node *LCABST(Node *root, Node *p, Node *q)
+bool TwoSumBST(Node *root, int target)
 {
-     if(root==NULL)
-     {
-        return NULL;
-     }
-     if(p->data<root->data && q->data<root->data)
-     {
-        Node *leftans=LCABST(root->left,p,q);
-        if(leftans!=NULL)
+    vector<int> ans;
+    function<void(Node*)> inorder=[&](Node *root){
+        if(root==NULL)
         {
-            return leftans;
+            return;
         }
-     }
-     if(p->data>root->data && q->data>root->data)
-     {
-        Node *rightans=LCABST(root->right,p,q);
-        if(rightans!=NULL)
+        inorder(root->left);
+        ans.push_back(root->data);
+        inorder(root->right);
+    };
+    inorder(root);
+    int i=0;
+    int j=ans.size()-1;
+    while(i<j)
+    {
+        if(ans[i]+ans[j]<target)
         {
-            return rightans;
+            i++;
         }
-     }
-     return root;
+        else if(ans[i]+ans[j]>target)
+        {
+            j--;
+        }
+        else if(ans[i]+ans[j]==target)
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 int main()
@@ -97,16 +105,8 @@ int main()
     Node *root=NULL;
     cout<<"Enter the data for Node: "<<endl;
     takeinput(root);
-    // vector<int> result=inorder(root);
-    // for(int num:result)
-    // {
-    //     cout<<num<<" ";
-    // }
-    int p,q;
-    cout<<"Enter the value of p and q node: ";
-    cin>>p>>q;
-    Node *pq=new Node(p);
-    Node *qp=new Node(q);
-    Node *ans=LCABST(root,pq,qp);
-    cout<<ans->data;
+    int target;
+    cout<<"Enter the target: ";
+    cin>>target;
+    cout<<TwoSumBST(root,target);
 }
