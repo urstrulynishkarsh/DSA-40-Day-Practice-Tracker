@@ -50,7 +50,7 @@ vector<vector<int> > verticalOrderTraversal(Node *&root)
         int row=q.front().second.first;
         int col=q.front().second.second;
         q.pop();
-        mp[row].push_back({col,curr->data});
+        mp[row].push_back({col,curr->data}); 
         if(curr->left)
             {
                 q.push({curr->left,{row+1,col-1}});
