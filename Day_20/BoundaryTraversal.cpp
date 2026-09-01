@@ -61,6 +61,7 @@ void  printLeafNodes(Node *root,vector<int> &ans)
     if(root->left==NULL && root->right==NULL)
     {
         ans.push_back(root->data);
+        return;
     }
      printLeafNodes(root->left,ans);
      printLeafNodes(root->right,ans);
@@ -90,6 +91,11 @@ void BoundaryTraversal(Node *root, vector<int> &ans)
     {
         return;
     }
+    if(root->left == NULL && root->right == NULL)
+        {
+            ans.push_back(root->data);
+            return;
+        }
     ans.push_back(root->data);
     printLeftNodes(root->left,ans);
     printLeafNodes(root,ans);

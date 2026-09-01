@@ -63,11 +63,6 @@ int main()
         cin>>nums[i];
     }
     Node *root=buildtree(nums);
-    vector<int> result=inorder(root);
-    for(int num:result)
-    {
-        cout<<num<<" ";
-    }
-    cout<<endl;
+    
     return 0;
 }
